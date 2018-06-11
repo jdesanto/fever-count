@@ -6,7 +6,7 @@ python3 fc.py -readings <readings data file> -user_data <user data file> -output
 
 All parameters are optional and default to readings.jsonl, user_data.csv, and results.txt
 
-Result is a tab delimated file with a header. For example:
+Result is a tab delimited file with a header. For example:
 
 ---
 zip,total
