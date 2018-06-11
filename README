@@ -1,1 +1,26 @@
-Nothing yet...
+Count fever occurence by zip code
+
+To run:
+
+python3 fc.py -readings <readings data file> -user_data <user data file> -output <output file>
+
+All parameters are optional and default to readings.jsonl, user_data.csv, and results.txt
+
+Result is a tab delimated file with a header. For example:
+
+---
+zip,total
+12198,3
+13464,2
+30585,6
+...
+---
+
+Assumptions:
+- Users have a unique zip code
+- ID has a fever if and only if there is at least once temp > 99.5
+- Multiple fever results count at 1
+
+Improvements (tbd):
+- Catch errors in all input
+- Catch mismatch in readings vs. user data (e.g. a reading without user data)
