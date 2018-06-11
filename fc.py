@@ -28,22 +28,22 @@ if __name__ == '__main__':
 
 	# Get user data
 	user_data = get_user_data(args.user_data)
-	print(user_data)
 
-	# Dict to hold zip->fever count
-	zip_fever_count = defaultdict(int)
+	zip_fever_count = defaultdict(int)    # holds zip->fever count
+	max_temp = defaultdict(float)         # holds uid->max temp
 
-	# Set to hold detecrepeat fever measurements
-	already_counted = set()
-
-	# Iterate through readings file and count zips with fever
+	# Iterate through readings to grab max temp per duration
 	with open(args.readings, 'r') as fh:
 		for l in fh:
 			data = json.loads(l)
 			uid = data['user']['id']
-			if data['temperature'] > 99.5 and uid not in already_counted:
-				zip_fever_count[user_data[uid]['zipcode']] += 1
-				already_counted.add(uid)
+			temperature = data['temperature']
+			max_temp[uid] = max(max_temp[uid], temperature)
+
+	# Count fevers by zip
+	for uid, temperature in max_temp.items():
+		if temperature > 99.5:
+			zip_fever_count[user_data[uid]['zipcode']] += 1
 
 	# Create output file
 	with open(args.output, 'w') as fh:
